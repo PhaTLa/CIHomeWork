@@ -8,104 +8,79 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-
-public class GamePanel extends JPanel {//tap trung code chinh
-
-//    BufferedImage image;
-//    Vector2D position;
+public class GamePanel extends JPanel {
     Player player;
     Background background;
     ArrayList<Enemy> enemies;
 
-
-    public GamePanel() {//load anh va khoi tao vi tri
-        player=new Player();
-        background=new Background();
-        enemies=new ArrayList<>();
-
+    public GamePanel() {
+        background = new Background();
+        player = new Player();
+        enemies = new ArrayList<>();
     }
 
-    @Override//ko thich dung ham paint mac dinh thi dung tn
-    public void paint(Graphics g) {//tu dong override===>cai nay eclipse ko co
-        //System.out.println("paint");se dc goi moi khi cso thay doi
-        background.render(g);
-        player.render(g);
-
-        for(int i=0;i<enemies.size();i++){
-            Enemy enemy=enemies.get(i);
-            enemy.render(g);
-        }
-
-    }
-
-    public void gameLoop(){//de lam ra fps
-        long lastloop=0;
-        long delay=1000/60;
-        while(true){
-            long currentTime=System.currentTimeMillis();//thoi diem hien tai bang mili sec tinh tu nam 1970 den nay
-            if(currentTime-lastloop > delay){
-               runAll();//alt+enter
-               renderAll();
-                lastloop=currentTime;
+    public void gameLoop() {
+        long lastLoop = 0;
+        long delay = 1000 / 60;
+        while(true) {
+            long currentTime = System.currentTimeMillis();
+            if(currentTime - lastLoop > delay) {
+                runAll(); // logic game
+                renderAll(); // render anh cua game
+                lastLoop = currentTime;
             }
         }
     }
 
-    private void renderAll() {//goi lai ham paint
-        repaint();//goi lai ham paint = repaint(co san trong thu vien)
+    private void renderAll() {
+        repaint(); // goi lai ham paint()
     }
 
-    private void runAll() {//chuyen dong
-        background.run();
-        player.run();
-        summonEnemy();
-        enemiesRun();
-
-    }
-
-    private void enemiesRun() {
-        for(int i=0;i<enemies.size();i++){
-            Enemy enemy=enemies.get(i);
-            enemy.run();
+    @Override
+    public void paint(Graphics g) {
+        for(int i = 0; i < GameObject.objects.size(); i++) {
+            GameObject object = GameObject.objects.get(i);
+            if(object.active) {
+                object.render(g);
+            }
         }
     }
 
-    int summonCount;
-    int waveCount;
-    int enemyCount;
-    Random random =new Random();
-    int enemyX=100+random.nextInt(200);
+    private void runAll() {
+        for (int i = 0; i < GameObject.objects.size(); i++) {
+            GameObject object = GameObject.objects.get(i);
+            if(object.active) {
+                object.run();
+            }
+        }
+        summonEnemies();
+        System.out.println(GameObject.objects.size());
+    }
 
-    private void summonEnemy() {
-        waveCount++;
-        if(waveCount>240){
+    // TODO: remove summonCount
+    int summonCount;
+    int wayCount;
+    int enemyCount;
+    Random random = new Random();
+    int enemyX = 100 + random.nextInt(200);
+    private void summonEnemies() {
+        wayCount++;
+        if(wayCount > 120) {
             summonCount++;
-            if(summonCount >30){
-                Enemy enemy=new Enemy();
-                enemy.position.set(enemyX,-100);
-                enemy.velocity.setAngle(Math.PI/9);
+            if(summonCount > 15) {
+//                Enemy enemy = new Enemy();
+                Enemy enemy = GameObject.recycle(Enemy.class);
+                enemy.position.set(enemyX, -100);
+                enemy.velocity.setAngle(Math.PI / 9);
                 enemies.add(enemy);
                 enemyCount++;
-                summonCount=0;
-
-                if(enemyCount>4){
-                    waveCount=0;
-                    enemyCount=0;
-                    enemyX=100+random.nextInt(200);
+                summonCount = 0;
+                if(enemyCount > 4) {
+                    wayCount = 0;
+                    enemyCount = 0;
+                    enemyX = 100 + random.nextInt(200);
                 }
             }
         }
-//note: if hell
     }
-
-    //TODO: remove
-
-
-
-
-
-
-
-
-
 }

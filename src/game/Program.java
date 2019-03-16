@@ -7,39 +7,40 @@ import java.awt.*;
  * Created by huynq on 7/4/17.
  */
 public class Program {
-
-
-    public static void main(String[] args) {//alt+enter ===> sua loi
-        GameWindow window = new GameWindow();// fn+shift+f6  ===> sua ten
-        window.setTitle("TouHou");//ctrl+alt+L  ====> can chinh
-        //window.setSize(, 600);
+    public static void main(String[] args) {
+        GameWindow window = new GameWindow();
+        window.setTitle("Game Touhou");
         window.setResizable(false);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         GamePanel panel = new GamePanel();
-        panel.setPreferredSize(new Dimension(Settings.GAME_WIDTH,Settings.GAME_HEIGHT));
-        panel.setBackground(Color.RED);
+        panel.setPreferredSize(new Dimension(Settings.GAME_WIDTH, Settings.GAME_HEIGHT));
+        panel.setBackground(Color.CYAN);
 
         window.add(panel);
-        window.pack();//phai co
-        window.setVisible(true);
-        //setup xong
+        window.pack();
 
+        window.setVisible(true);
 
         panel.gameLoop();
 
-//        ArrayList<game.Vector2D> vectors=new ArrayList<>();
-//        vectors.add(new game.Vector2D(1,1));
-//        vectors.add(new game.Vector2D(2,3));
-//        vectors.add(new game.Vector2D(2,4));
-//
-//        game.Vector2D vmax=new game.Vector2D(0,0);
-//
-//        for(game.Vector2D v:vectors){
-//            if(vmax.getLength()<v.getLength()){
-//                vmax.set(v.x,v.y);
+        // strings.add(); // them phan tu vao mang
+        // strings.get(); // lay ra phan tu o index truyen vao
+        // strings.size(); // lay ra kich thuoc mang
+//        ArrayList<game.Vector2D> vectors = new ArrayList<>();
+//        vectors.add(new game.Vector2D(1, 1));
+//        vectors.add(new game.Vector2D(3, 7));
+//        vectors.add(new game.Vector2D(3, 1));
+//        // TODO: tim vector co length max
+//        game.Vector2D maxLengthVector = null;
+//        double maxLength = 0;
+//        for (int i = 0; i < vectors.size(); i++) {
+//            game.Vector2D vector = vectors.get(i);
+//            if(vector.getLength() > maxLength) {
+//                maxLengthVector = vector;
+//                maxLength = vector.getLength();
 //            }
 //        }
-//        System.out.println("vector dai nhat: x="+vmax.x+" y="+vmax.y);
+//        System.out.println(maxLengthVector.x + " " + maxLengthVector.y);
     }
 }
