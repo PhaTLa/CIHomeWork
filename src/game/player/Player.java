@@ -3,7 +3,6 @@ package game.player;
 import game.GameObject;
 import game.GameWindow;
 import game.Settings;
-import game.physics.BoxCollider;
 import game.renderer.Renderer;
 import tklibs.SpriteUtils;
 
@@ -12,31 +11,17 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Player extends GameObject {
-    int hp;
 
     public Player() {
 //        BufferedImage image = SpriteUtils.loadImage("assets/images/players/straight/0.png");
 ////        renderer = new Renderer(image);
         renderer = new Renderer("assets/images/players/straight");
         position.set(300, 500);
-        hitBox=new BoxCollider(this,32,48);
-        hp=10;
     }
-    static Font font=new Font("Verdana",Font.BOLD,24);
+
     @Override
     public void render(Graphics g) {
         super.render(g);
-        g.setFont(font);
-        g.setColor(Color.GREEN);
-        g.drawString(hp+"",(int)position.x,(int)position.y);
-    }
-
-    public void takeDamage(int damage){
-        hp-=damage;
-        if(hp<=0){
-            hp=0;
-            this.deactive();
-        }
     }
 
     @Override
@@ -63,22 +48,22 @@ public class Player extends GameObject {
     }
 
     private void limit() {
-        if(position.x < 16) {
-            position.set(16, position.y);
+        if(position.x < 0) {
+            position.set(0, position.y);
         }
-        if(position.x > Settings.BACKGROUND_WIDTH - Settings.PLAYER_WIDTH +16) {
+        if(position.x > Settings.BACKGROUND_WIDTH - Settings.PLAYER_WIDTH) {
             position.set(
-                    Settings.BACKGROUND_WIDTH - Settings.PLAYER_WIDTH + 16,
+                    Settings.BACKGROUND_WIDTH - Settings.PLAYER_WIDTH,
                     position.y
             );
         }
-        if(position.y < 24) {
-            position.set(position.x, 24);
+        if(position.y < 0) {
+            position.set(position.x, 0);
         }
-        if(position.y > Settings.GAME_HEIGHT - Settings.PLAYER_HEIGHT + 24) {
+        if(position.y > Settings.GAME_HEIGHT - Settings.PLAYER_HEIGHT) {
             position.set(
                     position.x,
-                    Settings.GAME_HEIGHT - Settings.PLAYER_HEIGHT + 24
+                    Settings.GAME_HEIGHT - Settings.PLAYER_HEIGHT
             );
         }
     }

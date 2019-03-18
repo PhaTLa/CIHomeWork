@@ -2,6 +2,9 @@ package game;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 
 /**
  * Created by huynq on 7/4/17.
@@ -23,6 +26,31 @@ public class Program {
         window.setVisible(true);
 
         panel.gameLoop();
+
+//        String[] arr={"a","b","d","c"};
+//        java.util.List<String> list= Arrays.asList(arr);
+//
+//
+//        list.add("a");
+//        list.add("b");
+//        list.add("c");
+//        list.add("d");
+//        list.add("e");
+//        //trong java
+//        list.sort(new Comparator<String>() {
+//            @Override
+//            public int compare(String o1, String o2) {
+//                //int <0=> o1<o2
+//                //int =0: o1=o2
+//                //int >0: o1>o2
+//                return -o1.compareTo(o2);
+//            }
+//        });
+//
+//        for(String s: list){
+//            System.out.println(s);
+//        }
+
 
         // strings.add(); // them phan tu vao mang
         // strings.get(); // lay ra phan tu o index truyen vao

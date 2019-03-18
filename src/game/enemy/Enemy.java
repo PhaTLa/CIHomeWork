@@ -3,7 +3,6 @@ package game.enemy;
 import game.GameObject;
 import game.Settings;
 import game.physics.BoxCollider;
-import game.player.Player;
 import game.renderer.Renderer;
 import tklibs.SpriteUtils;
 
@@ -13,7 +12,6 @@ import java.awt.image.BufferedImage;
 public class Enemy extends GameObject {
     int fireCount;
     int hp;
-    int damage;
 
     public Enemy() {
         renderer = new Renderer("assets/images/enemies/level0/pink");
@@ -21,7 +19,6 @@ public class Enemy extends GameObject {
         fireCount = 0;
         hitBox = new BoxCollider(this, 28, 28);
         hp = 3;
-        damage=3;
     }
 
     static Font font = new Font("Verdana"
@@ -43,15 +40,6 @@ public class Enemy extends GameObject {
         changeDirection();
         fire();
         deactiveIfNeeded();
-        checkIntersect();
-    }
-
-    private void checkIntersect() {
-        Player player=GameObject.findIntersects(Player.class,this);
-        if(player!=null){
-            this.deactive();
-            player.takeDamage(damage);
-        }
     }
 
     private void deactiveIfNeeded() {
@@ -90,5 +78,12 @@ public class Enemy extends GameObject {
     public void reset() {
         super.reset(); // active = true
         hp = 3;
+    }
+
+    @Override
+    public void deactive() {
+        super.deactive();
+        EnemyExplosion explosion=GameObject.recycle(EnemyExplosion.class);
+        explosion.position.set(position);
     }
 }
